@@ -1,23 +1,23 @@
 from worlds.rainworld.constants import TOKEN_LOCATIONS
 
 LOCATIONS_MAP: dict[str, list[str]] = {
-    "Outskirts": [
+    "SU": [
         "Pearl-SU",
         *TOKEN_LOCATIONS["SU"]
     ],
-    "Industrial Complex": [
+    "HI": [
         "Pearl-HI",
         *TOKEN_LOCATIONS["HI"]
     ],
-    "Drainage System": [
+    "DS": [
         "Pearl-DS",
         *TOKEN_LOCATIONS["DS"]
     ],
-    "Garbage Wastes": [
+    "GW": [
         "Pearl-GW",
         *TOKEN_LOCATIONS["GW"]
     ],
-    "Shoreline": [
+    "SL": [
         "Pearl-SL_bridge",
         "Pearl-SL_chimney",
         "Pearl-SL_moon",
@@ -25,39 +25,39 @@ LOCATIONS_MAP: dict[str, list[str]] = {
         "Meet_LttM",
         "Save_LttM"
     ],
-    "Shaded Citadel": [
+    "SH": [
         "Echo-SH",
         "Pearl-SH",
         *TOKEN_LOCATIONS["SH"]
     ],
-    "The Exterior": [
+    "UW": [
         "Echo-UW",
         "Pearl-UW",
         *TOKEN_LOCATIONS["UW"]
     ],
-    "Five Pebbles": [
+    "SS": [
         *TOKEN_LOCATIONS["SS"],
         "Eat_Neuron",
         "Meet_FP",
     ],
-    "Chimney Canopy": [
+    "CC": [
         "Echo-CC",
         "Pearl-CC",
         *TOKEN_LOCATIONS["CC"],
     ],
-    "Sky Islands": [
+    "SI": [
         "Echo-SI",
         "Pearl-SI_top",
         "Pearl-SI_west",
         *TOKEN_LOCATIONS["SI"]
     ],
-    "Farm Arrays": [
+    "LF": [
         "Echo-LF",
         "Pearl-LF_west",
         "Pearl-LF_bottom",
         *TOKEN_LOCATIONS["LF"]
     ],
-    "Subterranean": [
+    "SB": [
         "Echo-SB",
         "Pearl-SB_ravine",
         "Pearl-SB_filtration",
@@ -66,23 +66,37 @@ LOCATIONS_MAP: dict[str, list[str]] = {
 }
 
 ALL_REGIONS: list[str] = [
-    "Outskirts",
-    "Industrial Complex",
-    "Drainage System",
-    "Garbage Wastes",
-    "Shoreline",
-    "Pipeyard",
-    "Shaded Citadel",
-    "The Exterior",
-    "Five Pebbles",
-    "Chimney Canopy",
-    "Sky Islands",
-    "Farm Arrays",
-    "Subterranean",
-    "Submerged Superstructure",
-    "Outer Expanse"
+    "SU",
+    "HI",
+    "DS",
+    "GW",
+    "SL",
+    "SH",
+    "UW",
+    "SS",
+    "CC",
+    "SI",
+    "LF",
+    "SB"
 ]
 
-ALL_GATES: list[set[str]] = [
-    {"SU", "HI"}
+GATES: list[tuple[str, str]] = [
+    ("SU", "HI"),
+    ("SU", "DS"),
+    ("HI", "GW"),
+    ("HI", "SH"),
+    ("HI", "CC"),
+    ("DS", "SB"),
+    ("DS", "GW"),
+    ("GW", "SL"),
+    ("SH", "UW"),
+    ("SH", "SL"),
+    ("UW", "SS"),
+    ("SS", "UW"),
+    ("CC", "UW"),
+    ("SI", "LF"),
+    ("SI", "CC"),
+    ("LF", "SB"),
+    ("LF", "SU"),
+    ("SB", "SL"),
 ]
