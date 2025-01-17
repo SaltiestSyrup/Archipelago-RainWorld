@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
-from Options import Choice, Toggle, PerGameCommonOptions
+from Options import Choice, Toggle, PerGameCommonOptions, DefaultOnToggle
+
 
 class DownpourDLC(Toggle):
     """
@@ -35,8 +36,37 @@ class Slugcat(Choice):
     alias_spear = 6
     alias_sait = 7
 
+class Passages(DefaultOnToggle):
+    """
+    Whether Passages should be randomized
+    The teleport tokens will also be randomized
+    """
+    display_name = "Randomize Passages"
+
+class Echoes(DefaultOnToggle):
+    """
+    Whether Echoes count as locations
+    Karma increases will still be randomized regardless
+    """
+    display_name = "Randomize Echoes"
+
+class Pearls(DefaultOnToggle):
+    """
+    Whether collecting pearls count as locations
+    """
+    display_name = "Randomize Pearls"
+
+class Tokens(DefaultOnToggle):
+    """
+    Whether collecting sandbox tokens count as locations
+    """
+    display_name = "Randomize Sandbox Tokens"
 
 @dataclass
 class RainOptions(PerGameCommonOptions):
     downpour: DownpourDLC
     slugcat: Slugcat
+    passages: Passages
+    echoes: Echoes
+    pearls: Pearls
+    tokens: Tokens
