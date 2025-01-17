@@ -127,6 +127,28 @@ TOKEN_LOCATIONS: dict[str, list[str]] = {
     ]
 }
 
+ALL_LOCATIONS: list[str] = [
+    *PASSAGE_LOCATIONS,
+    *ECHO_LOCATIONS,
+    *PEARL_LOCATIONS,
+    *TOKEN_LOCATIONS["SU"],
+    *TOKEN_LOCATIONS["HI"],
+    *TOKEN_LOCATIONS["DS"],
+    *TOKEN_LOCATIONS["CC"],
+    *TOKEN_LOCATIONS["GW"],
+    *TOKEN_LOCATIONS["SH"],
+    *TOKEN_LOCATIONS["SL"],
+    *TOKEN_LOCATIONS["SI"],
+    *TOKEN_LOCATIONS["LF"],
+    *TOKEN_LOCATIONS["UW"],
+    *TOKEN_LOCATIONS["SB"],
+    "Eat_Neuron",
+    "Meet_LttM",
+    "Save_LttM",
+    "Meet_FP",
+]
+
+# ---- Subsets of locations for each slugcat ----
 SURVIVOR_LOCATIONS: list[str] = [
     *PASSAGE_LOCATIONS,
     *ECHO_LOCATIONS,
@@ -246,27 +268,44 @@ HUNTER_LOCATIONS: list[str] = [
     "Meet_FP",
 ]
 
-ALL_LOCATIONS: list[str] = [
-    *PASSAGE_LOCATIONS,
-    *ECHO_LOCATIONS,
-    *PEARL_LOCATIONS,
-    *TOKEN_LOCATIONS["SU"],
-    *TOKEN_LOCATIONS["HI"],
-    *TOKEN_LOCATIONS["DS"],
-    *TOKEN_LOCATIONS["CC"],
-    *TOKEN_LOCATIONS["GW"],
-    *TOKEN_LOCATIONS["SH"],
-    *TOKEN_LOCATIONS["SL"],
-    *TOKEN_LOCATIONS["SI"],
-    *TOKEN_LOCATIONS["LF"],
-    *TOKEN_LOCATIONS["UW"],
-    *TOKEN_LOCATIONS["SB"],
-    "Eat_Neuron",
-    "Meet_LttM",
-    "Save_LttM",
-    "Meet_FP",
+GATE_ITEMS: list[str] = [
+    "GATE_SU_HI",
+    "GATE_SU_DS",
+    "GATE_HI_GW",
+    "GATE_HI_SH",
+    "GATE_HI_CC",
+    "GATE_DS_SB",
+    "GATE_DS_GW",
+    "GATE_GW_SL",
+    "GATE_SH_UW",
+    "GATE_SH_SL",
+    "GATE_UW_SS",
+    "GATE_SS_UW",
+    "GATE_CC_UW",
+    "GATE_SI_LF",
+    "GATE_SI_CC",
+    "GATE_LF_SB",
+    "GATE_LF_SU",
+    "GATE_SB_SL",
+]
+
+PASSAGE_ITEMS: list[str] = [
+    "Passage-Survivor",
+    "Passage-Hunter",
+    "Passage-Saint",
+    "Passage-Traveller",
+    "Passage-Chieftain",
+    "Passage-Monk",
+    "Passage-Outlaw",
+    "Passage-DragonSlayer",
+    "Passage-Scholar",
+    "Passage-Friend"
 ]
 
 ALL_ITEMS: list[str] = [
-
+    *GATE_ITEMS,
+    *PASSAGE_ITEMS,
+    "Karma",
+    "The Glow",
+    "The Mark"
 ]
