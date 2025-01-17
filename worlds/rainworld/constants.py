@@ -141,6 +141,7 @@ ALL_LOCATIONS: list[str] = [
     *TOKEN_LOCATIONS["SI"],
     *TOKEN_LOCATIONS["LF"],
     *TOKEN_LOCATIONS["UW"],
+    *TOKEN_LOCATIONS["SS"],
     *TOKEN_LOCATIONS["SB"],
     "Eat_Neuron",
     "Meet_LttM",
@@ -302,10 +303,22 @@ PASSAGE_ITEMS: list[str] = [
     "Passage-Friend"
 ]
 
+STORY_ITEMS: list[str] = [
+    "Karma",
+    "The Mark",
+    "Object-NSHSwarmer",
+    "Object-stomach_pearl"
+]
+
+# TODO: Fill out these items
+OBJECT_ITEMS: list[str] = [
+    "Object-Spear"
+]
+
 ALL_ITEMS: list[str] = [
     *GATE_ITEMS,
     *PASSAGE_ITEMS,
-    "Karma",
+    *STORY_ITEMS,
     "The Glow",
-    "The Mark"
+    *OBJECT_ITEMS
 ]
