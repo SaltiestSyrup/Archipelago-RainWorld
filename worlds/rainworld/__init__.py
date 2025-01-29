@@ -1,4 +1,4 @@
-from typing import ClassVar, TextIO
+from typing import ClassVar, TextIO, Any
 
 from BaseClasses import Tutorial, ItemClassification, LocationProgressType
 from settings import Group, FilePath
@@ -8,6 +8,7 @@ from .constants import ALL_ITEMS, ALL_LOCATIONS, PASSAGE_LOCATIONS, ECHO_LOCATIO
 from .options import RainOptions, Slugcat
 from .regions import ALL_REGIONS, GATES, ALL_REGIONS, LOCATIONS_MAP
 from .subclasses import RainRegion, RainLocation, RainItem
+from worlds.generic.Rules import set_rule
 
 
 class RainSettings(Group):
@@ -55,7 +56,6 @@ class RainWorld(World):
 
     item_name_groups = {
         "Gates": set(GATE_ITEMS),
-        "Karma": {"Karma"},
         "Passages": set(PASSAGE_ITEMS),
         "Story": set(STORY_ITEMS),
         "Items": set(OBJECT_ITEMS)
@@ -89,6 +89,10 @@ class RainWorld(World):
                 [RainLocation(self.player, loc, self.location_name_to_id[loc], region)
                 for loc in LOCATIONS_MAP[region.name]
                 if loc in relevant_locations]
+
+            # Event location for Ascending
+            if region.name == "SB":
+                region.locations.append(RainLocation(self.player, "Ascension", None, region))
 
             # - Add region to multiworld
             self.multiworld.regions.append(region)
@@ -190,12 +194,20 @@ class RainWorld(World):
 
     def set_rules(self) -> None:
         # TODO: Add logic for determining passage possibility
-        # Would require highly complex logic for some passages (notably Dragon Slayer)
 
-        # TODO: Add win condition
+        # Assign Ascension event
+        ascension_loc = self.multiworld.get_location("Ascension", self.player)
+        ascension_loc.place_locked_item(self.create_event("Ascension"))
+        # TODO: Make ascension condition dynamic based on starting karma
+        # Make ascension require karma increase to 10
+        set_rule(ascension_loc, lambda state: state.has("Karma", self.player, 4))
+
+        # TODO: Choose win condition from settings
+        # Assign win condition to ascending for now
+        self.multiworld.completion_condition[self.player] = lambda state: state.has("Ascension", self.player)
 
         from Utils import visualize_regions
-        visualize_regions(self.multiworld.get_region("Menu", self.player), "my_world.puml")
+        visualize_regions(self.multiworld.get_region("Menu", self.player), "rain_world.puml")
         pass
 
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
@@ -209,6 +221,16 @@ class RainWorld(World):
             item_id,
             self.player
         )
+
+    def create_event(self, event: str):
+        return RainItem(event, ItemClassification.progression, None, self.player)
+
+    def fill_slot_data(self) -> dict[str, Any]:
+        slot_data = {
+            "MSC": bool(self.options.downpour.value),
+            "Slugcat": int(self.options.slugcat.value),
+        }
+        return slot_data
 
     def get_item_classification(self, name: str) -> ItemClassification:
         if name in GATE_ITEMS:
