@@ -15,26 +15,27 @@ class Slugcat(Choice):
     Which slugcat you intend to play as.
     The campaign you start in-game MUST match this option
     """
+    # Values stored as to make comparisons to an IntFlag easier
     display_name = "Chosen Slugcat"
-    default = 0
-    option_survivor = 0
-    option_monk = 1
-    option_hunter = 2
-    option_gourmand = 3
-    option_artificer = 4
-    option_rivulet = 5
-    option_spearmaster = 6
-    option_saint = 7
+    default = 1
+    option_survivor = 1
+    option_monk = 2
+    option_hunter = 4
+    option_gourmand = 8
+    option_artificer = 16
+    option_rivulet = 32
+    option_spearmaster = 64
+    option_saint = 128
 
     # ---aliases---
-    alias_white = 0
-    alias_yellow = 1
-    alias_red = 2
-    alias_gourm = 3
-    alias_arty = 4
-    alias_wetmouse = 5
-    alias_spear = 6
-    alias_sait = 7
+    alias_white = 1
+    alias_yellow = 2
+    alias_red = 4
+    alias_gourm = 8
+    alias_arty = 16
+    alias_wetmouse = 32
+    alias_spear = 64
+    alias_sait = 128
 
 class Passages(DefaultOnToggle):
     """

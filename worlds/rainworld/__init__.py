@@ -7,6 +7,7 @@ from .constants import ALL_ITEMS, ALL_LOCATIONS, PASSAGE_LOCATIONS, ECHO_LOCATIO
     SURVIVOR_LOCATIONS, MONK_LOCATIONS, HUNTER_LOCATIONS, GATE_ITEMS, PASSAGE_ITEMS, STORY_ITEMS, OBJECT_ITEMS
 from .options import RainOptions, Slugcat
 from .regions import ALL_REGIONS, GATES, ALL_REGIONS, LOCATIONS_MAP
+from .rules import SLUGCAT_RULES, SlugcatAccessibility
 from .subclasses import RainRegion, RainLocation, RainItem
 from worlds.generic.Rules import set_rule
 
@@ -246,14 +247,16 @@ class RainWorld(World):
         Returns all the locations that should be used based on settings
         """
         # Each slugcat has a subset of locations they can reach
-        relevant_locations = None
-        match self.options.slugcat:
-            case Slugcat.option_survivor:
-                relevant_locations = SURVIVOR_LOCATIONS
-            case Slugcat.option_monk:
-                relevant_locations = MONK_LOCATIONS
-            case Slugcat.option_hunter:
-                relevant_locations = HUNTER_LOCATIONS
+        relevant_locations = ALL_LOCATIONS.copy()
+
+        #match self.options.slugcat:
+        #    case Slugcat.option_survivor:
+        #        relevant_locations = SURVIVOR_LOCATIONS
+        #    case Slugcat.option_monk:
+        #        relevant_locations = MONK_LOCATIONS
+        #    case Slugcat.option_hunter:
+        #        relevant_locations = HUNTER_LOCATIONS
+
         # Remove locations that have been excluded by settings
         if not self.options.passages:
             relevant_locations -= PASSAGE_LOCATIONS
@@ -263,5 +266,11 @@ class RainWorld(World):
             relevant_locations -= PEARL_LOCATIONS
         if not self.options.tokens:
             relevant_locations -= TOKEN_LOCATIONS
+
+        # Filter out locations this slugcat can't reach
+        for loc, rule in SLUGCAT_RULES.items():
+            if self.options.slugcat.value & rule == 0:
+                print(loc)
+                relevant_locations.remove(loc)
 
         return relevant_locations
