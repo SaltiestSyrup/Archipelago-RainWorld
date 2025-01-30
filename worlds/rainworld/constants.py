@@ -310,7 +310,7 @@ STORY_ITEMS: list[str] = [
     "Object-stomach_pearl"
 ]
 
-# TODO: Fill out these items
+# TODO: Fill out object items and make weight system for selecting them
 OBJECT_ITEMS: list[str] = [
     "Object-Spear"
 ]

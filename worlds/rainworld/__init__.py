@@ -91,7 +91,7 @@ class RainWorld(World):
                 for loc in LOCATIONS_MAP[region.name]
                 if loc in relevant_locations]
 
-            # Event location for Ascending
+            ## Event location for Ascending
             if region.name == "SB":
                 region.locations.append(RainLocation(self.player, "Ascension", None, region))
 
@@ -122,7 +122,7 @@ class RainWorld(World):
         self.multiworld.regions.append(menu_region)
 
         # Connect to starting region
-        # TODO: Randomizing starting den will be a bit more difficult than last time...
+        # TODO: Add starting den randomization with weighted options menu
         starting_region: str = "SU"
         match self.options.slugcat:
             case Slugcat.option_survivor | Slugcat.option_monk:
@@ -134,8 +134,7 @@ class RainWorld(World):
 
 
     def create_items(self) -> None:
-        # TODO: Double check how starting inventories work
-        # Not confident in this implementation
+        # Not confident in this implementation, should double-check this
         precollected = [item for item in self.multiworld.precollected_items[self.player]]
         precollected_names = [item.name for item in precollected]
         total_locations = len(self.find_relevant_locations())
@@ -186,7 +185,8 @@ class RainWorld(World):
 
         # Filler
         if item_count > total_locations:
-            # TODO: This is a fatal error situation, solve that somehow
+            # Is it okay to just return here?
+            # This is kind of a fatal issue
             return
 
         owed_filler += total_locations - item_count
@@ -195,6 +195,20 @@ class RainWorld(World):
 
     def set_rules(self) -> None:
         # TODO: Add logic for determining passage possibility
+        ## Survivor: Always completable
+        ## Monk: May be difficult / impossible in certain regions
+        ## Hunter: May be difficult / impossible in certain regions
+        ## Saint: May be difficult / impossible for hunter in certain regions
+        ## Outlaw: Impossible in regions without sufficient creatures (Five Pebbles)
+        ## Chieftain: Impossible in regions without scavengers
+        ## Wanderer: Requires full map access
+        ## Dragon Slayer: Requires access to 6 unique lizards in all available regions
+        ## Friend: Impossible in regions without lizards, difficult with certain lizards
+        ## Scholar: Conditions vary by slugcat
+        ## Martyr: May be difficult in certain regions
+        ## Nomad: Requires 4 regions connected in a line. Is every gate -> gate travel feasible in a cycle? Needs testing.
+        ## Pilgrim: Requires access to every Echo region
+        ## Mother: Impossible in regions where slugpups cannot spawn
 
         # Assign Ascension event
         ascension_loc = self.multiworld.get_location("Ascension", self.player)
